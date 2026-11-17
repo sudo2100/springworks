@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Welcome~</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h2>홈 페이지 방문을 환영합니다.</h2>
-    <hr>
-    <h3>시간 페이지로 이동</h3>
+    <div class="content">
+        <h2>홈 페이지 방문을 환영합니다.</h2>
+        <hr>
+        <h3><a th:href="@{/time}">시간 페이지로 이동</a></h3>
+    </div>
 </body>
 </html>

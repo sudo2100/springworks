@@ -13,4 +13,9 @@ public class HomeController {
         //return "<h1>Spring Boot 프레임워크 스터디</h1>";
         return "index";  // templates/index.html
     }
+
+    @GetMapping("/time")
+    public String time(){
+        return "pages/time";  //templates/pages/time.html
+    }
 }
