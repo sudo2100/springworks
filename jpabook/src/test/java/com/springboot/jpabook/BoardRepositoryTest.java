@@ -54,4 +54,31 @@ public class BoardRepositoryTest {
         boardList.forEach(board -> log.info(" " + board));
     }
 
+    // 게시글 상세보기
+    @Test
+    public void getBoard(){
+        //2번째 게시글 보기
+        Board board = repository.findById(2).get();
+        log.info(board.toString());
+    }
+
+    // 게시글 수정
+    @Test
+    public void updateBoard(){
+        log.info("*** 2번 게시글 조회 ***");
+        Board board = repository.findById(2).get();
+
+        // 제목 수정
+        board.setTitle("안녕하세요~");
+        board.setWriter("행복해");
+        repository.save(board);
+    }
+
+    // 게시글 삭제
+    @Test
+    public void deleteBoard() {
+        log.info("1번 게시글 삭제");
+        repository.deleteById(1);
+    }
+
 }
