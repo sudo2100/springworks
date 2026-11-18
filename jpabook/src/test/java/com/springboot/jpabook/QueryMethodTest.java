@@ -41,4 +41,15 @@ public class QueryMethodTest {
         }
     }
 
+    // 특정 단어가 포함된 글 내용 검색
+    @Test
+    public void testFindByContentContaining(){
+        List<Board> boardList = repository.findByContentContaining("17");
+
+        log.info("검색 결과");
+        for(Board board : boardList){
+            System.out.println("--->" + board);
+        }
+    }
+
 }
