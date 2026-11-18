@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: boardweb
+
+    # DataSource 설정 - mysql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springdb?serverTimezone=Asia/Seoul
+    username: javauser
+    password: pwjava
+
+  # JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: create  #create(초기화), update(유지)
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
