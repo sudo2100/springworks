@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 목록</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="p-5 mb-4 text-center bg-light">
+        <h1 class="mb-2">My Board</h1>
+        <p class="text-muted mb-0">Spring Boot, JPA, Thymeleaf 게시판</p>
+    </div>
+
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th>작성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="post: ${posts}">
+                    <td th:text="${post.id}">1</td>
+                    <td th:text="${post.title}">제목</td>
+                    <td th:text="${post.writer}">글쓴이</td>
+                    <td th:text="${post.createdAt}">작성일</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
