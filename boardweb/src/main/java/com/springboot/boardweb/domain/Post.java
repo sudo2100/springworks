@@ -45,4 +45,9 @@ public class Post {
         this.writer = writer;
     }*/
 
+    // 요청 받은 값으로 수정
+    public void update(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
 }

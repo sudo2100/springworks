@@ -3,6 +3,7 @@ package com.springboot.boardweb.controller;
 import com.springboot.boardweb.domain.Post;
 import com.springboot.boardweb.dto.AddPostRequest;
 import com.springboot.boardweb.dto.PostResponse;
+import com.springboot.boardweb.dto.UpdatePostRequest;
 import com.springboot.boardweb.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,8 +48,16 @@ public class PostApiController {
 
     // 글 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<PostResponse> deletePost(@PathVariable Long id){
+    public ResponseEntity<Void> deletePost(@PathVariable Long id){
         postService.delete(id);
         return ResponseEntity.ok().build(); //반환할 객체가 없어서 body() 없음(1을 반환)
+    }
+
+    // 글 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<PostResponse> updatePost(@PathVariable Long id,
+                                                   @RequestBody UpdatePostRequest request){
+        Post post = postService.update(id, request);  //수정한 게시글
+        return ResponseEntity.ok().body(new PostResponse(post));
     }
 }
