@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 // 1차 라우팅(도메인)
 @RequestMapping("/api/posts")
 @AllArgsConstructor
@@ -23,5 +25,30 @@ public class PostApiController {
     public ResponseEntity<PostResponse> addPost(@RequestBody AddPostRequest request){
         Post saved = postService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new PostResponse(saved));
+    }
+
+    // 글 목록
+    @GetMapping
+    public ResponseEntity<List<PostResponse>> findAllPosts(){
+        List<PostResponse> posts = postService.findAll()
+                .stream()
+                .map(PostResponse::new)
+                .toList();
+
+        return ResponseEntity.ok().body(posts);
+    }
+
+    // 글 상세 보기
+    @GetMapping("/{id}")  //@PathVariable - 경로의 특정값을 가져옴
+    public ResponseEntity<PostResponse> findPost(@PathVariable Long id){
+        Post post = postService.findById(id);
+        return ResponseEntity.ok().body(new PostResponse(post));
+    }
+
+    // 글 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PostResponse> deletePost(@PathVariable Long id){
+        postService.delete(id);
+        return ResponseEntity.ok().build(); //반환할 객체가 없어서 body() 없음(1을 반환)
     }
 }
