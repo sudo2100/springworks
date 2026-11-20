@@ -52,6 +52,29 @@ if(deleteButton){
     })
 }
 
+// 글 수정 PUT /api/posts/{id}
+const modifyButton = document.getElementById('modify-btn');
+if(modifyButton){
+    modifyButton.addEventListener('click', () => {
+        const id = getValue('post-id');
+        fetch(`/api/posts/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-type': 'application/json'},
+            body: JSON.stringify({
+                title: getValue('title'),
+                content: getValue('content')
+            })
+        }).then(response => {
+                if(response.ok){
+                    alert("수정되었습니다.");
+                    location.replace(`/posts/${id}`);
+                }else{
+                    alert("수정 실패: " + response.status);
+                }
+            }
+        )
+    });
+}
 
 
 

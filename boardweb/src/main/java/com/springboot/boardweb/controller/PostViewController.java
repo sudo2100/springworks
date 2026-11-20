@@ -18,9 +18,22 @@ public class PostViewController {
     private final PostService postService;  //생성자 주입방식으로 객체 생성
 
     // 글 목록 화면
-    @GetMapping("/posts")
+    /*@GetMapping("/posts")
     public String getPosts(Model model){
         List<PostResponse> posts = postService.findAll()
+                .stream()
+                .map(PostResponse::new)
+                .toList();
+        model.addAttribute("posts", posts); // 게시글을 글목록으로 보냄
+        return "post/postList";  //templates/post/postList.html
+    }*/
+
+    // 글 목록 화면 + 검색
+    @GetMapping("/posts")
+    public String getPosts(@RequestParam(required = false) String type,
+                           @RequestParam(required = false) String keyword,
+                           Model model){
+        List<PostResponse> posts = postService.search(type, keyword)
                 .stream()
                 .map(PostResponse::new)
                 .toList();

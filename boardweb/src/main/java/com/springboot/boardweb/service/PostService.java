@@ -26,6 +26,20 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    // 글 목록 + 검색
+    public List<Post> search(String type, String keyword){
+        if(keyword == null || keyword.isBlank()){
+            return findAll();  //글 목록 함수 호출
+        }
+        keyword = keyword.trim();   //검색어 공백 제거
+
+        return switch (type == null ? "title" : type){
+            case "content" -> postRepository.findByContentContainingOrderByIdDesc(keyword);
+            case "writer" -> postRepository.findByWriterContainingOrderByIdDesc(keyword);
+            default -> postRepository.findByTitleContainingOrderByIdDesc(keyword);
+        };
+    }
+
     // 글 상세 보기
     public Post findById(Long id){
         // 에와 처리 : IllegalArgumentException
