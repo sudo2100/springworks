@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 목록</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="p-5 mb-4 text-center bg-light">
+        <h1 class="mb-2">My Board</h1>
+    </div>
+
+    <div class="container" style="width: 60%">
+        <article>
+            <header class="mb-4">
+                <h2 th:text="${post.title}">제목</h2>
+                <div th:text="| ${post.writer} . ${#temporals.format(post.createdAt,
+                      'yyyy-MM-dd HH:mm')}|"  class="text-muted fst-italic">글쓴이. 작성일</div>
+            </header>
+
+            <section class="mb-5">
+                <!-- white-space: pre-line: 화면대로 보임(줄바꿈)  -->
+                <p th:text="${post.content}" style="white-space: pre-line">내용</p>
+            </section>
+
+            <a th:href="@{/posts}" class="btn btn-secondary btn-sm">목록</a>
+            <button type="button" id="delete-btn" class="btn btn-danger btn-sm">삭제</button>
+        </article>
+    </div>
+</body>
+</html>

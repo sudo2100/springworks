@@ -1,11 +1,13 @@
 package com.springboot.boardweb.controller;
 
+import com.springboot.boardweb.domain.Post;
 import com.springboot.boardweb.dto.PostResponse;
 import com.springboot.boardweb.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -29,5 +31,14 @@ public class PostViewController {
     @GetMapping("/new-post")
     public String newPost(){
         return "post/newPost";  //templates/post/newPost.html
+    }
+
+    // 글 상세 보기
+    @GetMapping("/posts/{id}")
+    public String getPost(@PathVariable Long id,
+                          Model model){
+        Post post = postService.findById(id);
+        model.addAttribute("post", new PostResponse(post));
+        return "post/postDetail"; //templates/post/postDetail.html
     }
 }
