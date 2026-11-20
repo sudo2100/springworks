@@ -11,23 +11,29 @@
     </div>
 
     <div class="container" style="width: 60%">
-        <h2 class="mb-2">글쓰기</h2>
+        <h2 class="mb-4" th:text="${post == null} ? '글 쓰기' : '글 수정'">글쓰기</h2>
+        <!-- ${post?.id} id가 없으면 null이므로 ?(옵셔닝 기호)-->
+        <input type="hidden" id="post-id" th:value="${post?.id}">
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
             <input type="text" id="title" class="form-control"
-                   placeholder="제목을 입력하세요">
+                   th:value="${post?.title}">
         </div>
         <div class="mb-3">
             <label for="writer" class="form-label">글쓴이</label>
+            <!-- 수정할 때는 글쓴이를 바꾸지 못하게 읽기 전용 -->
             <input type="text" id="writer" class="form-control"
-                   placeholder="이름을 입력하세요">
+                    th:value="${post?.writer}" th:readonly="${post != null}">
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">글내용</label>
             <textarea id="content" class="form-control"
-                      rows="10" placeholder="내용을 입력하세요"></textarea>
+                      rows="10" th:text="${post?.content}"></textarea>
         </div>
-        <button type="button" id="create-btn" class="btn btn-primary">등록</button>
+        <button th:if="${post == null}" type="button" id="create-btn"
+                 class="btn btn-primary">등록</button>
+        <button th:if="${post != null}" type="button" id="modify-btn"
+                class="btn btn-primary">수정</button>
         <a th:href="@{/posts}" class="btn btn-secondary">취소</a>
     </div>
 

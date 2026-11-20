@@ -32,3 +32,35 @@ if(createButton){
         });
     })
 }
+
+// 글 삭제 - DELETE /api/posts/{id}
+const deleteButton = document.getElementById('delete-btn');
+if(deleteButton){
+    deleteButton.addEventListener('click', () => {
+        if(!confirm('정말 삭제할까요?')) return; //취소
+        const id = getValue('post-id');
+        fetch(`/api/posts/${id}`, {method: 'DELETE'})
+            .then(response => {
+                if(response.ok){
+                    alert("삭제되었습니다.");
+                    location.replace('/posts');
+                }else{
+                    alert("삭제 실패: " + response.status);
+                }
+            }
+        );
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

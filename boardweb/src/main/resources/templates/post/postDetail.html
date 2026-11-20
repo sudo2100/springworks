@@ -11,7 +11,10 @@
     </div>
 
     <div class="container" style="width: 60%">
-        <article>
+        <article class="border rounded p-4">
+            <!-- 삭제, 수정 시 Javascript가 읽을 글 번호 -->
+            <input type="hidden" id="post-id" th:value="${post.id}">
+
             <header class="mb-4">
                 <h2 th:text="${post.title}">제목</h2>
                 <div th:text="| ${post.writer} . ${#temporals.format(post.createdAt,
@@ -24,8 +27,11 @@
             </section>
 
             <a th:href="@{/posts}" class="btn btn-secondary btn-sm">목록</a>
+            <a th:href="@{/new-post(id=${post.id})}" class="btn btn-primary btn-sm">수정</a>
             <button type="button" id="delete-btn" class="btn btn-danger btn-sm">삭제</button>
         </article>
     </div>
+
+    <script th:src="@{/js/post.js}"></script>
 </body>
 </html>
