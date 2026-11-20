@@ -11,14 +11,20 @@
         <p class="text-muted mb-0">Spring Boot, JPA, Thymeleaf 게시판</p>
     </div>
 
-    <div class="container">
+    <div class="container" style="width: 80%">
+        <!-- 게시글 총 수, 글쓰기 버튼 -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span th:text="| 전체 ${#lists.size(posts)} |">전체 0건</span>
+            <a th:href="@{/new-post}" class="btn btn-primary">글쓰기</a>
+        </div>
+
         <table class="table table-hover">
-            <thead>
+            <thead class="table-light">
                 <tr>
-                    <th>번호</th>
+                    <th style="width: 80px">번호</th>
                     <th>제목</th>
-                    <th>글쓴이</th>
-                    <th>작성일</th>
+                    <th style="width: 120px">글쓴이</th>
+                    <th style="width: 180px">작성일</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +32,12 @@
                     <td th:text="${post.id}">1</td>
                     <td th:text="${post.title}">제목</td>
                     <td th:text="${post.writer}">글쓴이</td>
-                    <td th:text="${post.createdAt}">작성일</td>
+                    <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</td>
+                </tr>
+
+                <!-- 글이 하나도 없을 때 -->
+                <tr th:if="${#lists.isEmpty(posts)}">
+                    <td colspan="4" class="text-center text-muted">등록된 글이 없습니다.</td>
                 </tr>
             </tbody>
         </table>

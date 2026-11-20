@@ -24,4 +24,10 @@ public class PostViewController {
         model.addAttribute("posts", posts); // 게시글을 글목록으로 보냄
         return "post/postList";  //templates/post/postList.html
     }
+
+    // 글 쓰기 화면
+    @GetMapping("/new-post")
+    public String newPost(){
+        return "post/newPost";  //templates/post/newPost.html
+    }
 }
