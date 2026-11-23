@@ -17,9 +17,9 @@ public class PostService {
     private PostRepository postRepository;
 
     // 글 등록
-    public Post save(AddPostRequest request){
+    public Post save(AddPostRequest request, String username){
         // 게시글이 DB에 저장
-       return postRepository.save(request.toEntity());
+       return postRepository.save(request.toEntity(username));
     }
 
     // 글 목록
