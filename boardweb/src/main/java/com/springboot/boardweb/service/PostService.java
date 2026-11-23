@@ -5,6 +5,7 @@ import com.springboot.boardweb.dto.AddPostRequest;
 import com.springboot.boardweb.dto.UpdatePostRequest;
 import com.springboot.boardweb.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,11 +24,13 @@ public class PostService {
 
     // 글 목록
     public List<Post> findAll(){
-        return postRepository.findAll();
+        //return postRepository.findAll();  //오름 차순 정렬
+        return  postRepository.findAll(Sort.by(Sort.Direction.DESC, "id")); //내림차순
     }
 
     // 글 목록 + 검색
     public List<Post> search(String type, String keyword){
+        // keyword == null 앞 순서가 있음(DB 쪽), keyword.isBlank() : 입력폼 데이터가 없음
         if(keyword == null || keyword.isBlank()){
             return findAll();  //글 목록 함수 호출
         }
