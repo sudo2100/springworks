@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a th:href="@{/admin}" class="navbar-brand">My Board 관리자</a>
+            <a th:href="@{/posts}" class="btn btn-outline-light btn-sm">게시판으로</a>
+        </div>
+    </nav>
+
+    <!-- 전체 현황 -->
+    <div class="container" style="max-width: 800px">
+        <h2 class="mb-4">현황</h2>
+        <!-- row(행) -->
+        <div class="row g-3 mb-4">
+            <!-- col(열) -->
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">전체 회원</p>
+                        <p class="display-6 mb-0" th:text="|${userCount}명|">0명</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">전체 글</p>
+                        <p class="display-6 mb-0" th:text="|${postCount}개|">0개</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 최근 글 5개 -->
+        <h5 class="mb-3">최근 글</h5>
+        <table class="table table-hover mb-5">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 80px">번호</th>
+                    <th>제목</th>
+                    <th style="width: 120px">글쓴이</th>
+                    <th style="width: 200px">작성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="post: ${recentPosts}">
+                    <td th:text="${post.id}">1</td>
+                    <td th:text="${post.title}">제목</td>
+                    <td th:text="${post.writer}">글쓴이</td>
+                    <td th:text="${#temporals.format(post.createdAt,
+                            'yyyy-MM-dd HH:mm')}">작성일</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 회원 관리 -->
+        <h5 class="mb-3">회원 관리</h5>
+        <table class="table table-hover align-middle mb-5">
+            <thead class="table-light">
+            <tr>
+                <th style="width: 80px">번호</th>
+                <th>아이디</th>
+                <th style="width: 100px">권한</th>
+                <th style="width: 130px">가입일</th>
+                <th style="width: 90px">삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}">1</td>
+                <td th:text="${user.username}">hong</td>
+                <td>
+                    <span class="badge" th:text="${user.role}"
+                          th:classappend="${user.role == 'ADMIN'} ? 'text-bg-danger' : 'text-bg-secondary'">USER</span>
+                </td>
+                <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd')}">2026-11-20</td>
+                <td>
+                    <!-- 회원 삭제 -->
+                    <form th:action="@{/admin/users/{id}/delete(id=${user.id})}" method="post"
+                          onsubmit="return confirm('회원과 회원이 쓴 글이 모두 삭제됩니다. 삭제할까요?');">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
