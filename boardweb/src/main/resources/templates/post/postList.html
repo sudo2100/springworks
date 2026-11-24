@@ -14,6 +14,7 @@
         </th:block>
         <th:block th:if="${loginUser != null}">
             <span th:text="${loginUser}">아이디님</span>
+            <a th:if="${isAdmin}" th:href="@{/admin}" class="btn btn-outline-danger btn-sm">관리자</a>
             <form th:action="@{/logout}" method="post" class="m-0">
                 <button type="submit" class="btn btn-outline-secondary btn-sm">로그아웃</button>
             </form>

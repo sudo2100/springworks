@@ -11,4 +11,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByTitleContainingOrderByIdDesc(String keyword); //제목
     List<Post> findByContentContainingOrderByIdDesc(String keyword); //내용
     List<Post> findByWriterContainingOrderByIdDesc(String keyword); //글쓴이
+
+    // 최신 5개 글 목록(id 내림차순)
+    List<Post> findTop5ByOrderByIdDesc();
+
 }

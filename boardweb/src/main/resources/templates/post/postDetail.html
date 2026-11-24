@@ -6,6 +6,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css">
 </head>
 <body>
+    <!-- 로그인 상태(우측 상단) -->
+    <div class="container d-flex justify-content-end align-items-center gap-2 py-2">
+        <th:block th:if="${loginUser == null}">
+            <a th:href="@{/login}" class="btn btn-outline-primary btn-sm">로그인</a>
+            <a th:href="@{/siginup}" class="btn btn-outline-success btn-sm">회원가입</a>
+        </th:block>
+        <th:block th:if="${loginUser != null}">
+            <span th:text="${loginUser}">아이디님</span>
+            <form th:action="@{/logout}" method="post" class="m-0">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">로그아웃</button>
+            </form>
+        </th:block>
+    </div>
+
     <div class="p-5 mb-4 text-center bg-light">
         <h1 class="mb-2">My Board</h1>
     </div>
@@ -27,8 +41,11 @@
             </section>
 
             <a th:href="@{/posts}" class="btn btn-secondary btn-sm">목록</a>
-            <a th:href="@{/new-post(id=${post.id})}" class="btn btn-primary btn-sm">수정</a>
-            <button type="button" id="delete-btn" class="btn btn-danger btn-sm">삭제</button>
+            <!-- 로그인한 아이디 = 글쓴이 일때 -->
+            <th:block th:if="${loginUser == post.writer}">
+                <a th:href="@{/new-post(id=${post.id})}" class="btn btn-primary btn-sm">수정</a>
+                <button type="button" id="delete-btn" class="btn btn-danger btn-sm">삭제</button>
+            </th:block>
         </article>
     </div>
 

@@ -24,6 +24,7 @@ public class SecurityConfig {
                                 "/signup", "/login").permitAll()
                         .requestMatchers("/css/**", "/js/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()  // 나머지는 로그인 필요
                 )
                 .formLogin(form -> form
