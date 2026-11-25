@@ -24,6 +24,19 @@
             <textarea id="content" class="form-control"
                       rows="10" th:text="${post?.content}"></textarea>
         </div>
+        <!-- AI 글쓰기 도우미 -->
+        <div class="card mb-3">
+            <div class="card-header">🤖 AI 글쓰기 도우미</div>
+            <div class="card-body">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="ai-question"
+                           placeholder="예: 도입부를 더 흥미롭게 하려면?">
+                    <button type="button" id="ai-btn" class="btn btn-outline-primary">AI 제안</button>
+                </div>
+                <ul class="list-group" id="ai-result"></ul>
+                <div class="form-text">제안을 클릭하면 글내용 끝에 붙습니다.</div>
+            </div>
+        </div>
         <button th:if="${post == null}" type="button" id="create-btn"
                  class="btn btn-primary">등록</button>
         <button th:if="${post != null}" type="button" id="modify-btn"
