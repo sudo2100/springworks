@@ -42,10 +42,11 @@
 
             <a th:href="@{/posts}" class="btn btn-secondary btn-sm">목록</a>
             <!-- 로그인한 아이디 = 글쓴이 일때 -->
-            <th:block th:if="${loginUser == post.writer}">
-                <a th:href="@{/new-post(id=${post.id})}" class="btn btn-primary btn-sm">수정</a>
-                <button type="button" id="delete-btn" class="btn btn-danger btn-sm">삭제</button>
-            </th:block>
+            <a th:if="${loginUser == post.writer}" th:href="@{/new-post(id=${post.id})}"
+               class="btn btn-primary btn-sm">수정</a>
+            <button th:if="${loginUser == post.writer or isAdmin}" type="button" id="delete-btn"
+                    class="btn btn-danger btn-sm">삭제</button>
+
         </article>
     </div>
 

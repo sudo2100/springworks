@@ -7,7 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
 
 @RequestMapping("/admin")
 @RequiredArgsConstructor
@@ -30,5 +35,19 @@ public class AdminController {
                 .toList());
 
         return "admin/dashboard";
+    }
+
+    // 회원 삭제
+    @PostMapping("/users/{id}/delete")
+    public String deleteUser(@PathVariable long id,
+                 Principal principal, RedirectAttributes redirectAttributes){
+        try{
+            adminService.deleteUser(id, principal.getName());
+            // redirect 한 다음 화면에 한 번만 값을 전달
+            redirectAttributes.addFlashAttribute("message", "회원을 삭제했습니다.");
+        }catch (IllegalArgumentException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/admin";  //삭제 후 본래 페이지 이동
     }
 }

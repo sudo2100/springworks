@@ -13,6 +13,12 @@
         </div>
     </nav>
 
+    <!-- 처리 결과 -->
+    <div class="container" style="width: 80%">
+        <div th:if="${message}" class="alert alert-success" th:text="${message}">처리 결과</div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}">오류</div>
+    </div>
+
     <!-- 전체 현황 -->
     <div class="container" style="max-width: 800px">
         <h2 class="mb-4">현황</h2>

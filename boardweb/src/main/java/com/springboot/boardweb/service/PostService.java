@@ -6,6 +6,7 @@ import com.springboot.boardweb.dto.UpdatePostRequest;
 import com.springboot.boardweb.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,18 +52,29 @@ public class PostService {
     }
 
     // 글 삭제
-    public void delete(Long id){
-        postRepository.deleteById(id);
+    public void delete(Long id, String username, boolean isAdmin){
+        Post post = findById(id);  //상세보기 함수 호출
+        if(!isAdmin) {
+            checkWriter(post, username); //글쓴이와 아이디 비교
+        }
+        postRepository.delete(post);
     }
 
     // 글 수정
     @Transactional  //트랜잭션 종료시에 변경 내용 자동 반영
-    public Post update(Long id, UpdatePostRequest request){
+    public Post update(Long id, UpdatePostRequest request, String username){
         // 수정할 게시글 가져오기
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+        Post post = findById(id);
+        checkWriter(post, username);
         // 글 수정 (update 함수는 Post에 있음)
         post.update(request.getTitle(), request.getContent());
         return post;
+    }
+
+    // 글쓴이와 로그인한 사람 아이디 비교
+    public void checkWriter(Post post, String username){
+        if(!post.getWriter().equals(username)){
+            throw new AccessDeniedException("본인이 쓴 글만 수정, 삭제할 수 있습니다.");
+        }
     }
 }
